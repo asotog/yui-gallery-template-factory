@@ -26,16 +26,25 @@ _yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"] 
     path: "build/gallery-template-factory/gallery-template-factory.js",
     code: []
 };
-_yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].code=["YUI.add('gallery-template-factory', function (Y, NAME) {","","Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {","","    initializer: function () {},","","    /**","     * Retrieves the template by id","     *","     * @param String template id is the template filename without the file extension,","     *             e.g : file -> profile-info.html, id -> profile-info","     * @return String","     */","    getTemplate: function (templateId) {","        if (Y.TemplateFactory.TEMPLATES[templateId]) {","            return Y.TemplateFactory.TEMPLATES[templateId];","        }","        return this.requestTemplate(templateId);","    },","","    /**","     * Requests the template directly via io like a normal ajax request without verifying if it was already used and stored","     *","     * @param String template id is the template filename without the file extension,","     *             e.g : file -> profile-info.html, id -> profile-info","     * @return String","     */","    requestTemplate: function (templateId) {","        var response = Y.io(this._getTemplatePath(templateId), {","            sync: true","        });","        Y.TemplateFactory.TEMPLATES[templateId] = response.responseText;","        return Y.TemplateFactory.TEMPLATES[templateId];","    },","","    /**","     * Gets the template file path","     *","     * @param String template id is the template filename without the file extension,","     *             e.g : file -> profile-info.html, id -> profile-info","     * @return String","     */","    _getTemplatePath: function (templateId) {","        return this.get('path') + templateId + this.get('suffix');","    },","","    destructor: function () {","","    }","}, {","    ATTRS: {","        path: {","            value: ''","        },","","        suffix: {","            value: '.html'","        }","    }","});","","","Y.TemplateFactory = {","","    /**","     * Instantiates template requestor","     *","     * @param Object Configuration","     * @return Object Template requestor","     */","    getRequestor: function (configuration) {","        return new Y.TemplateRequestor(configuration);","    }","};","","/**"," * Namespace to store in an associative array the templates already loaded to avoid"," * multiple http calls to the same template"," *"," * @type Object"," */","Y.namespace('TemplateFactory.TEMPLATES');","","}, '@VERSION@', {\"requires\": [\"yui-base\", \"base-build\", \"io-base\"]});"];
-_yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].lines = {"1":0,"3":0,"15":0,"16":0,"18":0,"29":0,"32":0,"33":0,"44":0,"63":0,"72":0,"82":0};
-_yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].functions = {"getTemplate:14":0,"requestTemplate:28":0,"_getTemplatePath:43":0,"getRequestor:71":0,"(anonymous 1):1":0};
+_yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].code=["YUI.add('gallery-template-factory', function (Y, NAME) {","","/**"," * Utility to retrieve html templates based on a template id"," *"," * @class TemplateRequestor"," * @extends Base"," * @module gallery-template-factory"," * @constructor"," * @param configuration {Object} Is the configuration object"," */","Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {","","    initializer: function () {},","","    /**","     * Retrieves the template by id","     *","     * @method getTemplate","     * @param String template id is the template filename without the file extension,","     *             e.g : file -> profile-info.html, id -> profile-info","     * @return String","     */","    getTemplate: function (templateId) {","        if (Y.TemplateFactory.TEMPLATES[templateId]) {","            return Y.TemplateFactory.TEMPLATES[templateId];","        }","        return this.requestTemplate(templateId);","    },","","    /**","     * Requests the template directly via io like a normal ajax request without verifying if it was already used and stored","     *","     * @method requestTemplate","     * @param String template id is the template filename without the file extension,","     *             e.g : file -> profile-info.html, id -> profile-info","     * @return String","     */","    requestTemplate: function (templateId) {","        var response = Y.io(this._getTemplatePath(templateId), {","            sync: true","        });","        Y.TemplateFactory.TEMPLATES[templateId] = response.responseText;","        return Y.TemplateFactory.TEMPLATES[templateId];","    },","","    _getTemplatePath: function (templateId) {","        return this.get('path') + templateId + this.get('suffix');","    },","","    destructor: function () {","","    }","}, {","    ATTRS: {","        /**","         * Indicates where the templates are stored","         *","         * @attribute path","         * @type String","         */","        path: {","            value: ''","        },","","        /**","         * Templates file suffix or extension","         *","         * @attribute suffix","         * @default '.html'","         * @type String","         */","        suffix: {","            value: '.html'","        }","    }","});","","/**"," * Factory util to retrieve the template requestor object"," *"," * @class TemplateFactory"," * @static"," * @module gallery-template-factory"," */","Y.TemplateFactory = {","","    /**","     * Instantiates template requestor","     *","     * @method getRequestor","     * @param {Object} Configuration","     * @return {TemplateRequestor} Template requestor","     */","    getRequestor: function (configuration) {","        return new Y.TemplateRequestor(configuration);","    }","};","","/**"," * Namespace to store in an associative array the templates already loaded to avoid"," * multiple http calls to the same template"," *"," * @type Object"," */","Y.namespace('TemplateFactory.TEMPLATES');","","}, '@VERSION@', {\"requires\": [\"yui-base\", \"base-build\", \"io-base\"]});"];
+_yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].lines = {"1":0,"12":0,"25":0,"26":0,"28":0,"40":0,"43":0,"44":0,"48":0,"86":0,"96":0,"106":0};
+_yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].functions = {"getTemplate:24":0,"requestTemplate:39":0,"_getTemplatePath:47":0,"getRequestor:95":0,"(anonymous 1):1":0};
 _yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].coveredLines = 12;
 _yuitest_coverage["build/gallery-template-factory/gallery-template-factory.js"].coveredFunctions = 5;
 _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 1);
 YUI.add('gallery-template-factory', function (Y, NAME) {
 
+/**
+ * Utility to retrieve html templates based on a template id
+ *
+ * @class TemplateRequestor
+ * @extends Base
+ * @module gallery-template-factory
+ * @constructor
+ * @param configuration {Object} Is the configuration object
+ */
 _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "(anonymous 1)", 1);
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 3);
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 12);
 Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
 
     initializer: function () {},
@@ -43,50 +52,45 @@ Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
     /**
      * Retrieves the template by id
      *
+     * @method getTemplate
      * @param String template id is the template filename without the file extension,
      *             e.g : file -> profile-info.html, id -> profile-info
      * @return String
      */
     getTemplate: function (templateId) {
-        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "getTemplate", 14);
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 15);
+        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "getTemplate", 24);
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 25);
 if (Y.TemplateFactory.TEMPLATES[templateId]) {
-            _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 16);
+            _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 26);
 return Y.TemplateFactory.TEMPLATES[templateId];
         }
-        _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 18);
+        _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 28);
 return this.requestTemplate(templateId);
     },
 
     /**
      * Requests the template directly via io like a normal ajax request without verifying if it was already used and stored
      *
+     * @method requestTemplate
      * @param String template id is the template filename without the file extension,
      *             e.g : file -> profile-info.html, id -> profile-info
      * @return String
      */
     requestTemplate: function (templateId) {
-        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "requestTemplate", 28);
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 29);
+        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "requestTemplate", 39);
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 40);
 var response = Y.io(this._getTemplatePath(templateId), {
             sync: true
         });
-        _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 32);
+        _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 43);
 Y.TemplateFactory.TEMPLATES[templateId] = response.responseText;
-        _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 33);
+        _yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 44);
 return Y.TemplateFactory.TEMPLATES[templateId];
     },
 
-    /**
-     * Gets the template file path
-     *
-     * @param String template id is the template filename without the file extension,
-     *             e.g : file -> profile-info.html, id -> profile-info
-     * @return String
-     */
     _getTemplatePath: function (templateId) {
-        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "_getTemplatePath", 43);
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 44);
+        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "_getTemplatePath", 47);
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 48);
 return this.get('path') + templateId + this.get('suffix');
     },
 
@@ -95,29 +99,49 @@ return this.get('path') + templateId + this.get('suffix');
     }
 }, {
     ATTRS: {
+        /**
+         * Indicates where the templates are stored
+         *
+         * @attribute path
+         * @type String
+         */
         path: {
             value: ''
         },
 
+        /**
+         * Templates file suffix or extension
+         *
+         * @attribute suffix
+         * @default '.html'
+         * @type String
+         */
         suffix: {
             value: '.html'
         }
     }
 });
 
-
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 63);
+/**
+ * Factory util to retrieve the template requestor object
+ *
+ * @class TemplateFactory
+ * @static
+ * @module gallery-template-factory
+ */
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 86);
 Y.TemplateFactory = {
 
     /**
      * Instantiates template requestor
      *
-     * @param Object Configuration
-     * @return Object Template requestor
+     * @method getRequestor
+     * @param {Object} Configuration
+     * @return {TemplateRequestor} Template requestor
      */
     getRequestor: function (configuration) {
-        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "getRequestor", 71);
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 72);
+        _yuitest_coverfunc("build/gallery-template-factory/gallery-template-factory.js", "getRequestor", 95);
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 96);
 return new Y.TemplateRequestor(configuration);
     }
 };
@@ -128,7 +152,7 @@ return new Y.TemplateRequestor(configuration);
  *
  * @type Object
  */
-_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 82);
+_yuitest_coverline("build/gallery-template-factory/gallery-template-factory.js", 106);
 Y.namespace('TemplateFactory.TEMPLATES');
 
 }, '@VERSION@', {"requires": ["yui-base", "base-build", "io-base"]});

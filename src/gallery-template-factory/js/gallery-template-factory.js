@@ -1,3 +1,12 @@
+/**
+ * Utility to retrieve html templates based on a template id
+ *
+ * @class TemplateRequestor
+ * @extends Base
+ * @module gallery-template-factory
+ * @constructor
+ * @param configuration {Object} Is the configuration object
+ */
 Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
 
     initializer: function () {},
@@ -5,6 +14,7 @@ Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
     /**
      * Retrieves the template by id
      *
+     * @method getTemplate
      * @param String template id is the template filename without the file extension,
      *             e.g : file -> profile-info.html, id -> profile-info
      * @return String
@@ -19,6 +29,7 @@ Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
     /**
      * Requests the template directly via io like a normal ajax request without verifying if it was already used and stored
      *
+     * @method requestTemplate
      * @param String template id is the template filename without the file extension,
      *             e.g : file -> profile-info.html, id -> profile-info
      * @return String
@@ -31,13 +42,6 @@ Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
         return Y.TemplateFactory.TEMPLATES[templateId];
     },
 
-    /**
-     * Gets the template file path
-     *
-     * @param String template id is the template filename without the file extension,
-     *             e.g : file -> profile-info.html, id -> profile-info
-     * @return String
-     */
     _getTemplatePath: function (templateId) {
         return this.get('path') + templateId + this.get('suffix');
     },
@@ -47,24 +51,44 @@ Y.TemplateRequestor = Y.Base.create('template-requestor', Y.Base, [], {
     }
 }, {
     ATTRS: {
+        /**
+         * Indicates where the templates are stored
+         *
+         * @attribute path
+         * @type String
+         */
         path: {
             value: ''
         },
 
+        /**
+         * Templates file suffix or extension
+         *
+         * @attribute suffix
+         * @default '.html'
+         * @type String
+         */
         suffix: {
             value: '.html'
         }
     }
 });
 
-
+/**
+ * Factory util to retrieve the template requestor object
+ *
+ * @class TemplateFactory
+ * @static
+ * @module gallery-template-factory
+ */
 Y.TemplateFactory = {
 
     /**
      * Instantiates template requestor
      *
-     * @param Object Configuration
-     * @return Object Template requestor
+     * @method getRequestor
+     * @param {Object} Configuration
+     * @return {TemplateRequestor} Template requestor
      */
     getRequestor: function (configuration) {
         return new Y.TemplateRequestor(configuration);
